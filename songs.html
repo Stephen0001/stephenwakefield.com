@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Worship Song Search</title>
+<style>
+body {
+    background-color: gray;
+    overflow: scroll;
+}
+body div {
+    width: 90%;
+    float: center;
+    background-color: #F5F5DC;
+    padding: 20px;
+    margin: 20px;
+}
+h1 {
+    font-size: 32px;
+    color: #008B8B;
+}
+li {
+    background-color: white;
+    list-style: none;
+    padding: 10px;
+    color: black;
+    border: 1px solid gray;
+}
+
+li:nth-child(even) {
+        background: #F5F5DC;
+}
+a:link {
+    text-decoration: none;
+    color: black; 
+}
+a:visited {
+    color: black;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:active  {
+    text-decoration: underline;
+}
+p, label, input, a, div, footer {
+    font-size: 16px;
+}
+footer {
+    text-align: center;
+    color: white;
+}
+</style>
+</head>
+<body>
+<body>
+<div id="searcharea">
+    <label for="search"><h1>WORSHIP SONG SEARCH</h1></label>
+    <p>Type the name of a song</p>
+    <input type="search" name="search" id="search" placeholder="i.e. 10,000 Reasons" autofocus />
+    <p>Press "Enter" or "Go"</p>
+    <!-- <p><a href="songList.html" id="fullSongList">See Full List of Songs</a></p> -->
+</div>
+<div id="update"></div>
+</div>
+<footer>
+    <p>This webpage is for non-profit use only. <br />The content should not be redistributed or sold.</p>
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+var songTitles = ["A King Like This Key of F", "Above All Key of Ab","Adonai Key of C","Adore Key of G","Agnus Dei Key of G","Alabaster Key of D","All Because of Jesus Key of Bb","All Glory Key of C","All Hail King Jesus Key of F","All in All Key of Eb","All Majesty and Honor and Praise Eb","All My Hope Key of D","All of My Days Key of F","All Things Are Possible Key of C to D","All to Him Key of F","All to Us Key of Bb","All Who Are Thirsty Key of G","Alleluia (Lover of our Souls) Key of D","Alleluia Key of G","Always Key of D","Amazing Grace (My Chains are Gone) Key of F","America the Beautiful Key of Bb to C (Steve Meeker Version)","Anchor Key of D","As the Deer Key of C","At Calvary Key of C","At the Cross (Hymn) Key of Eb","At the Cross by Hillsong Key of F","At the Cross by Tomlin Key of Eb","At Your Name Key of G","Be Glorified Key of G","Be Strong and Take Courage Bb","Be the Center Key of D","Beautiful Jesus Key of D","Beautiful One Key of C","Believe Key of C","Better is One Day Key of F","Blessed Be the Name Key of Ab","Blessed Be Your Name Key of Bb","Boundless Love Key of G to Ab to Bb","Breathe G","Bring Your Vessels Key of D","Broken Vessels G","Call on the Name Key of F","Center of My Joy Key of C","Chosen Generation Key of G","Christ Alone (Cornerstone) Key of F","Christ is Enough Key of F","Come As You Are Key of C","Come Now is the Time to Worship Key of D","Come to the Water Key of Eb","Days of Elijah Key of G to A","Desert Song Key of D","Did You Feel the Mountains Tremble Key of Bb","Draw Me Close to You Key of Bb","Emmanuel (Hallowed Manger Ground) Key of Ab","Enough Key of G","Even So Come Key of Eb","Ever Be Key of F","Everday Key of G","Everlasting God (Key of Bb)","Every Move I Make Key of G","Everywhere He Went Key of G","Famous One Key of G","Fearfully and Wonderfully Made Key of Ab","Follow You F","For All You've Done Key of F","Forever Key of G to A","Forever Reign Key of C","Freedom Key of G","Friend of God Key of C","From the Inside Out Key of C","Give Us Clean Hands (Key of G)","Glorious Day Key of Bb","God is Great Key of D","God is the Strength of My Heart Ab","God of Wonders Key of G","Good Good Father Key of F","Grace Flows Down Key of F","Grace Like Rain Key of Dm","Great I Am Key of F","Great in Power Key of D","Great is Thy Faithfulness Key of D","Hallelujah (Your Love is Amazing) Key of G","Have Thine Own Way Lord Key of F","He is Lord Key of F","He Knows My Name Key of F","Healer Key of G","Healing in Your Hands Key of F","Here I Am to Worship Key of D","Here's My Heart Lord Key of D","He's Coming Soon Key of G","High and Lifted Up Key of C","His Grace is Sufficient for Me (Key of Ab)","Holiness Key of G","Holy and Anointed One Key of G","Holy is the Lord Key of G","Holy Spirit Key of D","Holy Spirit, Rain Down Key of G","Hosanna (I See the King of Glory) Key of D","How Can It Be Key of Bb","How Great is Our God (Modern) Key of Bb","I Am Not Alone F","I Believe Jesus Saves (Key of G)","I Could Sing of Your Love Forever Key of G","I Feel Jesus (Key of F)","I Know Who I Am Key of G","I Lost It All To Find Everything","I Love You Lord Key of G","I Love You with the Love of the Lord Key of F","I Need Thee Every Hour Key of G","I Stand in Awe of You Key of G","I Will Follow Key of G","I Will Rise Key of G","I'm So Glad that the Lord Saved Me (Key of Eb)","In Christ Alone Key of F","In the Spirit Key of Eb","It Shall Flow Like the River C","Jesus Hold My Hand Key of Eb","Jesus Is Coming Soon Key of Eb","Jesus is His Name Key of Bb","Jesus is Passing This Way (CHORUS) Key of F","Jesus is the Sweetest Name, I Love Him Key of C","Jesus Lover of my Soul Key of G","Jesus on the Mainline Keys; F,G,Ab,Bb","Jesus The Son of God Key of G","Joyful (Key of D)","Kindness Key of G","Leave it There Eb","Let it Breathe on Me Key of F","Let the River Flow F","Lord I Lift Your Name on High Key of G","Lord I Need You D","Love Lifted Me Key of Bb","Maker of All Things Key of G","My Redeemer Lives Key of F","My Savior First of All (Key of G)","My Savior's Love Key of G","Never Alone Key of C","Never Once Key of Bb","No Other Name D","O I Want to See Him Key of Ab","Oh How He Loves You and Me Key of G","Old Time Power Key of F","Only Trust Him (Key of G)","Open the Eyes of My Heart Lord Key of D","Our God Saves F","Redeemer Key of Bb","Rise and Be Healed Key of G","Saved to the Uttermost Key of G","Shout to the Lord Key of Bb to C","Shout to the North Key of G","Since Jesus Came Into My Heart Ab","Soon and Very Soon Key of F","Springs of Living Water G","Stronger Key of C","Such Love Key of G","Sweep Over My Soul (Key of Ab)","Sweet Hour of Prayer D","Sweet, Sweet Spirit (Key of G)","Thank You God for Saving Me Key of G","The Awesome God You Are G","The Healer Key of Eb","The King is Coming Key of Ab","The Old Rugged Cross Key of Bb","The Wonderful Cross Key of D","There is a River F","There is Power in the Blood Key of Bb","There's Just Something About That Name Key of Eb","There's Only One Way F","They That Wait Upon the Lord (Key of F)","Through it All (Key of Eb)","Trading My Sorrows (Key of G)","Unchanging (Key of F)","Unfailing Love Eb","Until Then Key of C","Unto God Key of Em","Victory Key of G","We Will Stand Key of F","Welcome Holy Spirit Key of F","What a Healing Jesus Eb","When I Look into Your Holiness Key of D","When I See the Blood (Key of C)","When the Roll is Called Key of G","Where Would I Be Key of F","Who Am I (Traditional) Key of Db","Who Am I (Contemporary) Key of G","Whom Shall I Fear Tomlin Key of G","Whosoever Meaneth Me (Key of Ab)","Yes I Know Key of Ab","Yesterday, Today, Forever Ab","You Are Good G","You Are My King Key of F","You Deserve the Glory Key of C","You Reign Bb","Your Grace is Enough G","You're Worthy of My Praise G","Even So Lord Jesus Come Key of Eb","How Great is Your Love Key of F","Humble King Key of D","Hungry Key of D","I Can Only Imagine Key of F","I Won't Have to Worry Anymore Key of G","Oh Happy Day Key of D","In Jesus Name Key of G","In the Secret Key of G","Indescribable Key of G","It is You Hillsong Key of F","It is You Newsboys Key of C","It's Your Love That Falls Key of F","Jesus Key of D","Jesus Lord of Heaven Key of F","Jesus Loves Me Tomlin Key of Ab","Jesus Messiah Key of G","King of Glory Key of F","Lead Me to the Cross Key of D","Let My Words Be Few Key of G","Lion and the Lamb Key of D","Lord I Give You My Heart Key of G","Love Has Come Key of G","Mighty to Save Key of G","More Love More Power Key of Em","My Hope Is You Key of C","Not to Us Key of G","O Come to the Altar Key of D","O Praise Him Key of G","Oceans Key of F","Offering Key of F","Once And for All Key of Eb","One Thing Remains Key of D","One Way Key of F","Our God Key of F","Prepare the Way Key of C","Prince of Peace Key of F","Revelation Song Key of D","Sing Out Key of F","Strong God Key of G","Surrender with All to Jesus Key of G","The Athem (Hallelujah) Key of F","The Heart of Worship Key of D","The One We Love Key of D","The Stand Key of G","There is None Like You Key of F","There is Power Key of F","There Will Be A Day Key of D","This I Believe Key of G","Unashamed Love Key of G","We Are Hungry Key of D","We Believe Key of Eb","We Fall Down Key of D","We Sing Glory Key of F","We Will Dance Key of D","What A Beautiful Name It Is Key of D","What A Friend I've Found Key of D","When the Stars Burn Down Key of G","10,000 Reasons Key of F","Whom Shall I Fear Darrell Evans Key of F","Wonderful Maker Key of F","Worthy is the Lamb Key of C","You Are Holy Key of G","You Are My World Key of D","You Are So Good To Me Key of D","You Are The Light Key of D","You Are The One Key of D","You Never Let Go Key of Bb","You Revive Me Key of D","You'll Come Key of D","Your Beloved Key of G","Your Grace Finds Me Key of Bb","Your Great Name Key of Bb","Your Love O Lord Key of F","Your Name Key of Bb","Be Glorified (Traditional) Key of D","Behold the Lamb Key of F","Celebrate Jesus Key of F","Freely, Freely Key of F","Give God the Glory Key of Bb","He Who Began A Good Work in You Key of G","Here Comes Jesus Key of F","Holy Ground Medley Key of C","How Excellent is Thy Name Key of G","Jesus What A Beautiful Name Keys Eb,F","My Faith Still Holds Key of Bb","Say the Name Keys F,G","The Battle Belongs to the Lord Key of Em","The River is Here Key of F","Think About His Love Key of D","Thy Word Key of G","To Him Who Sits on the Throne Key of C","Fear Not Key of Am","A Crown of Thorns Key of D","I Surrender Key of D","All the Earth Will Sing Your Praises Key of D","Psalm 19 Key of D"];
+
+var searcharea = document.getElementById("searcharea");
+
+var input = document.getElementsByTagName("input");
+
+var songTitles = songTitles.sort();
+
+var enter = "13";
+
+$('#search').keyup(function(event) {
+    var searchField = $('#search').val();
+    if (event.keyCode == enter) {
+            input.search.value = null;
+            var myExp = new RegExp(searchField, "i");
+            var output = '<ol class="searchresults">';
+            for (var i = 0; i < songTitles.length; i++) {
+                if (songTitles[i].search(myExp) != -1) {
+                    output += '<li>' + songTitles[i] + '<br />'
+                        +   '<audio controls preload="none"><source src="./mp3/' + songTitles[i] + '.mp3" type="audio/mpeg"></audio>' + '<br />' + '<a href=' + '"' + './pdf/' + songTitles[i] + '.pdf' + '"' + ' target=_blank>' + '<strong>Open Sheet Music</strong>' + '</a>' + '</li>';
+                };
+                    output += '</ol>';
+                    $('#update').html(output);
+            }
+    }
+});
+</script>
+</body>
+
+</html>

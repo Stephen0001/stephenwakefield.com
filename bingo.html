@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang = "en">
+<head>
+	<meta charset= "UTF-8">
+	<title>Bingo</title>
+	<link href="style2.css" rel="stylesheet" type="text/css">
+</head>
+<style>
+html {
+    width: 100%;
+    background-color: white;
+}
+body {
+    width: 100%;
+}
+body div {
+	width: 95%;
+	padding-left: 10%;
+}
+table {
+	width: 80%;
+    background-color: #8080ff;
+    padding: 1%;
+}
+th {
+	width: 80%;
+    font-size: 4em;
+    display: block;
+    color:  white;
+}
+td {
+	width: 19%;
+	height: 2.5em;
+	display: block;
+    border: 1px solid #000;
+    font-size: 36px;
+    float: left;
+    background-color: #ccccff;
+    text-align: center;    
+}
+#button {
+    background-position: bottom;
+    margin-top: 1%;
+    margin-left: 34%;
+    font-size: 32px;
+}
+
+#header {
+    display: flex;
+    width: 97%;   
+}
+
+#freeSpace {
+    font-weight: bold;	
+    color: blue;
+}
+
+</style>
+<body>
+	<div>
+	<table>
+		<thead>
+			<tr id="header">
+				<th>B</th>
+				<th>I</th>
+				<th>N</th>
+				<th>G</th>
+				<th>O</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="column1"></td>
+				<td class="column2"></td>
+				<td class="column3"></td>
+				<td class="column4"></td>
+				<td class="column5"></td>
+			</tr>
+			<tr>
+				<td class="column1"></td>
+				<td class="column2"></td>
+				<td class="column3"></td>
+				<td class="column4"></td>
+				<td class="column5"></td>
+			</tr>
+			<tr>
+				<td class="column1"></td>
+				<td class="column2"></td>
+				<td id="freeSpace">Free Space</td>
+				<td class="column4"></td>
+				<td class="column5"></td>
+			</tr>
+			<tr>
+				<td class="column1"></td>
+				<td class="column2"></td>
+				<td class="column3"></td>
+				<td class="column4"></td>
+				<td class="column5"></td>
+			</tr>
+			<tr>
+				<td class="column1"></td>
+				<td class="column2"></td>
+				<td class="column3"></td>
+				<td class="column4"></td>
+				<td class="column5"></td>
+			</tr>
+		</tbody>
+	</table>
+<button id="button">Refresh</button>
+<script>
+window.onload = function () {
+	function randomIntFromInterval(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) + min);
+	}
+
+	function loadBingoCard() {
+		var countOfColumns = 5;
+		var numberOfDifferentValuesForEachColumn = 15;
+		var usedValuesArray = [];
+
+		for (var i = 1; i <= countOfColumns; i++) {
+			var cellsInThisColumn = document.getElementsByClassName('column' + i);
+
+			for (var j = 0; j < cellsInThisColumn.length; j++) {
+				var columnMin = ((i - 1) * numberOfDifferentValuesForEachColumn) + 1;
+				var columnMax = i * numberOfDifferentValuesForEachColumn;
+
+				var bingoCellValue = randomIntFromInterval(columnMin, columnMax);
+
+				while (usedValuesArray.indexOf(bingoCellValue) !== -1) {
+					bingoCellValue = randomIntFromInterval(columnMin, columnMax);
+				}
+
+				usedValuesArray.push(bingoCellValue);
+				cellsInThisColumn[j].innerHTML = bingoCellValue;
+			}
+		}
+	}
+
+	loadBingoCard();
+
+	document.getElementById("button").onclick = loadBingoCard;
+};
+</script>
+</div>
+</body>
+</html>

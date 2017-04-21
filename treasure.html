@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Find the buried treasure!</title>
+</head>
+<body>
+<h1 id="heading">Find the buried treasure!</h1>
+<div id="mainDiv">
+<div id="location0">Corn Field</div>
+<div id="location1">Tent</div>
+<div id="location2">Dragon</div>
+<div id="location3">Secret Pond</div>
+<div id="location4">Secret Road</div>
+<img id="map" width=400 height=400 src="http://nostarch.com/images/treasuremap.png">
+<p id="distance"></p>
+</div>
+
+<style>
+
+#mainDiv {
+	width: 400px;
+	height: 400px;
+}
+
+div {
+	color: white;
+	text-transform: uppercase;
+}
+
+#location0 {
+	width: 10px;
+	height: 10px;
+	margin-left: 30px;
+	margin-top: 95px;
+}
+
+#location1 {
+	width: 10px;
+	height: 10px;
+	margin-left: 300px;
+	margin-top: -55px;
+}
+
+#location2 {
+	width: 10px;
+	height: 10px;
+	margin-left: 315px;
+	margin-top: 150px;
+}
+
+#location3 {
+	width: 10px;
+	height: 10px;
+	margin-left: 75px;
+	margin-top: 50px;
+}
+
+#location4 {
+	width: 10px;
+	height: 10px;
+	margin-left: 330px;
+	margin-top: 5px;
+}
+
+img {
+	margin-top: 60px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+}
+
+</style>
+
+<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+<script>
+
+alert("Welcome to 'Find the Buried Treasure'. Click in the area you think the treasure is buried. You have 3 guesses to win the game!")
+
+var clicks = 0;
+
+	var randomLocations = [
+		"#location0", 
+		"#location1", 
+		"#location2", 
+		"#location3", 
+		"#location4"
+	]
+
+var randomIndex = Math.floor(Math.random() * randomLocations.length);
+var solution = (randomLocations[randomIndex]);
+
+function guess(event) {
+	alert("Congradulations, You Win!");
+	clicks === 3;
+	reloadPage();
+}
+
+$(solution).click(guess);
+
+
+$("div div").click(function () {
+	  alert("Keep Guessing");
+      clicks++;
+
+      if (clicks > 2) {
+        alert("Sorry, You Lose");
+        reloadPage();
+       }
+    })
+
+function reloadPage() {
+	location.reload();
+}
+
+</script>
+
+</body>
+</html>
