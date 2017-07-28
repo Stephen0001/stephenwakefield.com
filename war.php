@@ -81,10 +81,7 @@ class Game {
 		return substr($playersDeck[0],0,$this->substringLength);
 	}
 
-	public function displayTieImgs($playersDeck) {
-		//Jeremy, is using globals here considered bad practice because of the nature of classes?
-		global $tie;
-		
+	public function displayTieImgs($playersDeck,$tie) {
 		$output = "<td>";
 		for ($i=1; $i < $tie; $i++) {
 			$output .= "<img src=\"img/";
@@ -95,9 +92,7 @@ class Game {
 		echo $output;
 	}
 
-	public function winnerTakesSpoils(&$winner,&$loser) {
-		global $player1Deck, $player2Deck;
-
+	public function winnerTakesSpoils(&$winner,&$loser,&$player1Deck,&$player2Deck) {
 		array_push($winner, $loser[0]);
 		array_push($winner, $winner[0]);
 		array_splice($winner,0,1);
@@ -106,11 +101,9 @@ class Game {
 		echo "<td>" . count($player2Deck) . "</td>";
 	}
 
-	public function tieBreaker($message,&$winner,&$loser) {
-		global $player1Deck, $player2Deck, $tie;
-
-		$this->displayTieImgs($player1Deck);
-		$this->displayTieImgs($player2Deck);
+	public function tieBreaker($message,&$winner,&$loser,&$player1Deck,&$player2Deck,$tie) {
+		$this->displayTieImgs($player1Deck,$tie);
+		$this->displayTieImgs($player2Deck,$tie);
 		echo "<td>$message</td>";
 
 		for ($i=0; $i < $tie; $i++) { 
@@ -121,11 +114,9 @@ class Game {
 		array_splice($loser,0,$tie);
 	}
 
-	public function stalemate() {
-		global $player1Deck, $player2Deck, $tie;
-
-		$this->displayTieImgs($player1Deck);
-		$this->displayTieImgs($player2Deck);
+	public function stalemate(&$player1Deck,&$player2Deck,$tie) {
+		$this->displayTieImgs($player1Deck,$tie);
+		$this->displayTieImgs($player2Deck,$tie);
 		echo "<td>Stalemate</td>";
 		for ($i=0; $i < $tie; $i++) { 
 			array_push($player2Deck,$player2Deck[$i]);
@@ -196,16 +187,15 @@ class Game {
 						<td><img src=\"img/$player2Deck[0].jpg\"></td>";
 						//if player1 wins
 						if ($game->getCardVal($player1Deck) > $game->getCardVal($player2Deck)) {
-							$game->winnerTakesSpoils($player1Deck,$player2Deck);
+							$game->winnerTakesSpoils($player1Deck,$player2Deck,$player1Deck,$player2Deck);
 						//if player2 wins			
 						} elseif ($game->getCardVal($player2Deck) > $game->getCardVal($player1Deck)) {
-							$game->winnerTakesSpoils($player2Deck,$player1Deck);
+							$game->winnerTakesSpoils($player2Deck,$player1Deck,$player1Deck,$player2Deck);
 						//if tie
 						} else {
 							//put this code into the Game class???
 							echo "<td>" . count($player1Deck) . "</td>";
 							echo "<td>" . count($player2Deck) . "</td>";
-							//if a tie happens with less than or equal to 4 cards							
 							if (count($player1Deck) <= $tieBreaker) {
 								$tieBreaker = count($player1Deck) - 1;
 								$tie = count($player1Deck);
@@ -213,18 +203,17 @@ class Game {
 								$tieBreaker = count($player2Deck) - 1;
 								$tie = count($player2Deck);
 							}
-							//put this code into the Game class???
 							$player1TieBreaker = $player1Deck[$tieBreaker];
 							$player2TieBreaker = $player2Deck[$tieBreaker];
 								//if player1 wins the tie
 								if (substr($player1TieBreaker,0,$substringLength) > substr($player2TieBreaker,0,$substringLength)) {
-									$game->tieBreaker("Advantage $player1",$player1Deck,$player2Deck);
+									$game->tieBreaker("Advantage $player1",$player1Deck,$player2Deck,$player1Deck,$player2Deck,$tie);
 								//if player2 wins the tie
 								} elseif (substr($player1TieBreaker,0,$substringLength) < substr($player2TieBreaker,0,$substringLength)) {
-									$game->tieBreaker("Advantage $player2",$player2Deck,$player1Deck);
+									$game->tieBreaker("Advantage $player2",$player2Deck,$player1Deck,$player1Deck,$player2Deck,$tie);
 								//if there are two ties in a row (i.e. stalemate)
 								} else {
-									$game->stalemate();
+									$game->stalemate($player1Deck,$player2Deck,$tie);
 								}
 						}	
 				echo "</tr>";
