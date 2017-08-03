@@ -128,7 +128,6 @@ class Game {
 } //end of class
 ?>
 
-<?php //include "includes/class_lib.php"; ?>
 <!doctype HTML>
 <html lang="en">
 
