@@ -1,102 +1,103 @@
 <?php
-$bingoColumnRange = 15;
-$numberOfBingoRows = 5;
-$freeSpace = 2;
-$bingoRows = [];
-function generateRandomArrays($minRange) {
-        $array = range($minRange, $minRange + $GLOBALS['bingoColumnRange']);
-        shuffle($array);
-        return $array;
+$bingoValuesArray = [];
+$mathArray = [];
+$numberOfColumns = 5;
+$rangeDiff = 15;
+$freeSpaceLocation = 2;
+
+function randomArray($condition,$min,$max) {
+	global $bingoValuesArray;
+	while (count($bingoValuesArray) < $condition) { 
+		$rand = rand($min,$max);
+		array_push($bingoValuesArray,$rand);
+		$bingoValuesArray = array_unique($bingoValuesArray);
+	}
 }
 
-for ($i = 0; $i < $numberOfBingoRows; $i++) {
-    $bingoRows[] = generateRandomArrays($i * $bingoColumnRange + 1);
+for ($j=-1; $j < $numberOfColumns-1; $j++) { 
+	$mathArray[] = ($rangeDiff * $j) + $rangeDiff + 1;
 }
+
+for ($i=0; $i < $numberOfColumns; $i++) {
+	randomArray(($numberOfColumns * $i) + $numberOfColumns,$mathArray[$i],($rangeDiff * $i) + $rangeDiff);
+}
+
+$bingoValuesArray = array_chunk($bingoValuesArray,$numberOfColumns);
+
+$bingoValuesArray[$freeSpaceLocation][$freeSpaceLocation]="Free Space";
 ?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bingo</title>
+</head>
+
 <style>
-html {
-    width: 800px;
-    background-color: white;
+html, body { 
+	height: 100%; 
+	width: 100%;
 }
-body {
-    width: 700px;
-    background-color: bisque;
+body div {
+	height: 80%;
+	width: 80%;
+	padding: 5%;
 }
 table {
-    margin-left: 20px;
+	height: 70%;
+	width: 80%;
+	float: center;
+	text-align: center;
+}
+td, tr {
+	width: 5%;
+	background: #00FFFF;
+	font-size: 20px;
+	border: 1px solid black;
 }
 th {
-    font-size: 4em;
-    display: block;
-    padding-left: 35px;
-    color: blueviolet;
+	background: #F5F5DC;
+	color: #00008B;
+	border: 1px solid black;
 }
-#header {
-    display: flex;
-    letter-spacing: 48px;
-    margin-left: 20px;
+td:only-child {
+	background: white;
+	border: hidden;
 }
-td {
-    display: block;
-    height: 75px;
-    width: 75px;
-    border: 1px solid #000;
-    font-size: 36px;
-    float: left;
-    padding-left: 50px;
-    background-color: aliceblue;
+button {
+	font-size: 15px;
 }
-Button {
-    background-position: bottom;
-    margin-top: 10px;
-    margin-left: 280px;
-    font-size: 32px;
+a {
+	color: black;
+	text-decoration: none;
 }
 </style>
-</head>
+
 <body>
-    <table>
-        <thead>
-            <tr id="header">
-                <th>B</th>
-                <th>I</th>
-                <th>N</th>
-                <th>G</th>
-                <th>O</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-        function createBingoCard($array) {
-            for ($j = 0; $j < $GLOBALS['numberOfBingoRows']; $j++) {
-                echo "<td>";
-                $newArray = array_splice($GLOBALS['bingoRows'][$j], 0, 1);
-                foreach ($newArray as $value) {
-                    if ($j == $GLOBALS['freeSpace'] && $array == $GLOBALS['freeSpace']) {
-                        $value = "Free Space";
-                    } 
-                    print_r($value);
-                }
-                echo "</td>";
-            }
-        }
-        for ($k = 0; $k < $numberOfBingoRows; $k++) {
-            echo '<tr>';
-            createBingoCard($k);
-            echo '</tr>';
-        }
-        ?>
-        </tbody>
-    </table>
-    <a href="<?=substr(__FILE__, strrpos(__FILE__, '/') + 1);?>">
-        <button>Refresh</button>
-    </a>
+	<div>
+	<?php
+	echo "<table>
+			<tr>
+				<th>B</th>
+				<th>I</th>
+				<th>N</th>			
+				<th>G</th>			
+				<th>O</th>				
+			</tr>";
+			echo "<tr>";
+			for ($i=0; $i < $numberOfColumns; $i++) { 
+				for ($j=0; $j < $numberOfColumns; $j++) { 
+					echo "<td>" . $bingoValuesArray[$j][$i] . "</td>";
+				}
+				echo "</tr>";
+			}
+		echo "<tr><td colspan=5><button><a href=\"" . $_SERVER["PHP_SELF"] . "\">Refresh</a></button></td></tr>";
+	echo "</table>";
+	?>
+	</div>
 </body>
 
 </html>
