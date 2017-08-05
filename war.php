@@ -192,7 +192,6 @@ class Game {
 							$game->winnerTakesSpoils($player2Deck,$player1Deck,$player1Deck,$player2Deck);
 						//if tie
 						} else {
-							//put this code into the Game class???
 							echo "<td>" . count($player1Deck) . "</td>";
 							echo "<td>" . count($player2Deck) . "</td>";
 							if (count($player1Deck) <= $tieBreaker) {
