@@ -93,7 +93,7 @@ a {
 				for ($j=0; $j < $numberOfColumns; $j++) { 
 					echo "<td>" . $bingoValuesArray[$j][$i] . "</td>";
 				}
-				echo "</tr>";
+			echo "</tr>";
 			}
 			echo "<tr><td colspan=5><button><a href=\"" . $_SERVER["PHP_SELF"] . "\">Refresh</a></button></td></tr>";
 		echo "</table>";
