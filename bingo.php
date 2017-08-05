@@ -79,24 +79,24 @@ a {
 <body>
 	<div>
 	<?php
-	echo "
-	<table>
-		<tr>
-			<th>B</th>
-			<th>I</th>
-			<th>N</th>			
-			<th>G</th>			
-			<th>O</th>				
-		</tr>";
-		echo "<tr>";
-		for ($i=0; $i < $numberOfColumns; $i++) { 
-			for ($j=0; $j < $numberOfColumns; $j++) { 
-				echo "<td>" . $bingoValuesArray[$j][$i] . "</td>";
+		echo "
+		<table>
+			<tr>
+				<th>B</th>
+				<th>I</th>
+				<th>N</th>			
+				<th>G</th>			
+				<th>O</th>				
+			</tr>";
+			echo "<tr>";
+			for ($i=0; $i < $numberOfColumns; $i++) { 
+				for ($j=0; $j < $numberOfColumns; $j++) { 
+					echo "<td>" . $bingoValuesArray[$j][$i] . "</td>";
+				}
+				echo "</tr>";
 			}
-			echo "</tr>";
-		}
-		echo "<tr><td colspan=5><button><a href=\"" . $_SERVER["PHP_SELF"] . "\">Refresh</a></button></td></tr>";
-	echo "</table>";
+			echo "<tr><td colspan=5><button><a href=\"" . $_SERVER["PHP_SELF"] . "\">Refresh</a></button></td></tr>";
+		echo "</table>";
 	?>
 	</div>
 </body>
