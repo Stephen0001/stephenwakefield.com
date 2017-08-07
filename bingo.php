@@ -71,6 +71,9 @@ $bingoValuesArray[$freeSpaceLocation][$freeSpaceLocation]="Free Space";
 	a {
 		color: black;
 		text-decoration: none;
+		border: black solid 1px;
+		padding: 5px;
+		background: #F5F5DC;
 	}
 	</style>
 </head>
@@ -89,15 +92,15 @@ $bingoValuesArray[$freeSpaceLocation][$freeSpaceLocation]="Free Space";
 				<th>O</th>				
 			</tr>
 			</thead>
-			<tbody>
-			<tr>";
+			<tbody>";
 			for ($i=0; $i < $numberOfColumns; $i++) { 
+				echo "<tr>";
 				for ($j=0; $j < $numberOfColumns; $j++) { 
 					echo "<td>" . $bingoValuesArray[$j][$i] . "</td>";
 				}
 				echo "</tr>";
 			}
-			echo "<tr><td colspan=5><button><a href=\"" . $_SERVER["PHP_SELF"] . "\">Refresh</a></button></td></tr>
+			echo "<tr><td colspan=5><a href=\"" . $_SERVER["PHP_SELF"] . "\">Refresh</a></td></tr>
 			</tbody>
 		</table>";
 	?>
