@@ -68,6 +68,7 @@ button {
 <script>
 var numberOfTeams = 2;
 var audioFileLength = 60;
+var scoreLimit = scoreLimit;
 var reset = document.getElementById("reset");
 var timer = document.getElementById("timer");
 var phrase = document.getElementById("phrase");
@@ -124,7 +125,7 @@ function score (teamScore,message) {
 	scoreForTeamValue = Number(scoreForTeamValue);
 	scoreForTeamValue += 1; 
 	teamScore.innerHTML = scoreForTeamValue;
-	if (scoreForTeamValue == 7) {
+	if (scoreForTeamValue == scoreLimit) {
 		congrats.innerHTML = "Congrats Team " + message;
 		hardReset();
 	} else {
