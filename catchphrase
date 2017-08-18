@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catchphrase</title>
+<style>
+table {
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	margin: 5% 5%;
+	float: center;
+	width: 60%;
+	text-align: center;
+	border: 1px solid black;
+	border-radius: 50%;
+    background: #008fb3;
+    padding: 15px; 
+}
+td {
+	padding: 10px;
+	color: white;
+}
+button {
+	border-radius: 50%;
+}
+#phrase,#congrats {
+	font-size: 2em;
+	font-weight: bold;
+}
+</style>
+</head>
+<body>
+<audio id="beep">
+  <source src="timer.mp3" type="audio/mpeg">
+</audio>	
+	<div>
+		<table>
+			<tr>
+				<td colspan="2"><button id="reset">Reset Scores</button></td>
+			</tr>
+			<tr>
+				<td><button id="team1Button">Team 1</button></td>
+				<td><button id="team2Button">Team 2</button></td>
+			</tr>
+			<tr>
+				<td id="scoreForTeam1">0</td>
+				<td id="scoreForTeam2">0</td>
+			</tr>
+			<tr>	
+				<td colspan="2"><button id="timer">TIMER</button></td>
+			</tr>			
+			<tr>
+				<td colspan="2">(Double Click to Restart Timer)</td>
+			</tr>
+			<tr><td colspan="2"><hr></td></tr>			
+			<tr>
+				<td colspan="2" id="phrase">HIT NEXT TO START</td>
+			</tr>
+			<tr>
+				<td colspan="2"><button id="next">NEXT</button></td>
+			</tr>
+			<tr>
+				<td id="congrats" colspan="2"></td>
+			</tr>
+		</table>
+	</div>
+<script>
+var numberOfTeams = 2;
+var audioFileLength = 60;
+var reset = document.getElementById("reset");
+var timer = document.getElementById("timer");
+var phrase = document.getElementById("phrase");
+var next = document.getElementById("next");
+var congrats = document.getElementById("congrats");
+var beep = document.getElementById("beep");
+var phraseArray = ["pocket picker","God Bless America","Hi Ho","happily ever after","only strikes once","tick tock","bushel and a peck","get out of there","fire in the hole","in and out","come out and play","slicker than snot","world peace","get it while you can","the outer rim","walkie talkie","green noser","match made in heaven","give me liberty","after all","piece of work","scratch that","game over","move on out","pigs in a blanket","come on in","Harry Carrie","pinch of salt","home sweet home"]; 
+
+//changes all phraseArray items to UPPERCASE
+for (var i = 0; i < phraseArray.length; i++) {
+	phraseArray[i] = phraseArray[i].toUpperCase();
+};
+
+//randomize the phraseArray
+for (var i = 0; i < phraseArray.length + phraseArray.length; i++) {
+	var randomIndex = Math.floor(Math.random() * phraseArray.length);
+	phraseArray.push(phraseArray[randomIndex]);
+	phraseArray.splice(randomIndex,1);
+};
+
+//instantiate variables using a for loop
+for (var i = 1; i < 1 + numberOfTeams; i++) {
+	eval("var team" + i + "Button = document.getElementById(\"team" + i + "Button\")");
+	eval("var scoreForTeam" + i + " = document.getElementById(\"scoreForTeam" + i + "\")");
+};
+
+function hardReset () {
+	scoreForTeam1.innerHTML = 0;
+	scoreForTeam2.innerHTML = 0;
+}
+
+reset.onclick = function() {
+	hardReset();
+}
+
+timer.onclick = function() {
+	beep.play();
+}
+
+timer.ondblclick = function() {
+	beep.currentTime = audioFileLength;
+}
+
+next.onclick = function() {
+	phrase.innerHTML = phraseArray[0];
+	phraseArray.splice(0,1);
+	if (phraseArray.length == 0) {
+		phrase.innerHTML = "SORRY, NO MORE PHRASES";
+	}
+}
+
+function score (teamScore,message) {
+	var scoreForTeamValue = teamScore.innerHTML;
+	scoreForTeamValue = Number(scoreForTeamValue);
+	scoreForTeamValue += 1; 
+	teamScore.innerHTML = scoreForTeamValue;
+	if (scoreForTeamValue == 7) {
+		congrats.innerHTML = "Congrats Team " + message;
+		hardReset();
+	} else {
+		congrats.innerHTML = "";
+	}
+}
+	
+//creates and executes the onclick functions for each team
+for (var i = 1; i < 1 + numberOfTeams; i++) {
+	eval("team" + i + "Button.onclick = function() { score(scoreForTeam" + i + ",\"" + i + "\"); };");
+};
+</script>
+</body>
+
+</html>
