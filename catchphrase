@@ -68,7 +68,7 @@ button {
 <script>
 var numberOfTeams = 2;
 var audioFileLength = 60;
-var scoreLimit = scoreLimit;
+var scoreLimit = 7;
 var reset = document.getElementById("reset");
 var timer = document.getElementById("timer");
 var phrase = document.getElementById("phrase");
