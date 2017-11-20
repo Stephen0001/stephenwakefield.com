@@ -1,11 +1,11 @@
-//C# CONSOLE APPLICATION
+//C# CONSOLE APPLICATION (Visual Studio)
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DungeonLibrary; //added
-using DungeonMonsters; //added
+using DungeonLibrary; //added (class library)
+using DungeonMonsters; //added (class library)
 
 namespace DungeonApplication
 {
@@ -15,10 +15,8 @@ namespace DungeonApplication
         {
             Console.Title = "The Dungeon";
             Console.WriteLine("Welcome to the Dungeon!");
-
             Weapon sword = new Weapon(6, 1, "Sword", 5, true);
             Player player = new Player("Lerooooy Jenkins", 20, 30, sword, 2, Race.Drawf, 15);
-
             bool exit = false;
 
             do
@@ -270,7 +268,6 @@ namespace DungeonLibrary
             }//end else
         } //end DoAttackMethod()
 
-
         public static void DoBattle(Player player, Monster monster)
         {
             DoAttackMethod(player, monster);
@@ -293,9 +290,10 @@ namespace DungeonLibrary
 {
     public class Monster : Character
     {
-        //properties
-        private int _minDamage; //field  //business rule!
+        //field
+        private int _minDamage;
 
+        //properties
         public int MaxDamage { get; set; }
         public string Description { get; set; }
         public string EnemyClass { get; set; }
@@ -312,7 +310,7 @@ namespace DungeonLibrary
                 {
                     _minDamage = 1;
                 }
-            }
+            }//end set
         }//end MinDamage
 
 
@@ -349,7 +347,7 @@ namespace DungeonLibrary
         public override int CalcDamage()
         {
             return new Random().Next(MinDamage, MaxDamage + 1);
-        }
+        }//end CalcDamage()
     }//end class
 }//end namespace
 
@@ -493,7 +491,6 @@ namespace DungeonLibrary
             set { _maxDamage = value; }
         }//end MaxDamage
 
-        //Applying a Business Rule!
         public int MinDamage
         {
             get { return _minDamage; }
