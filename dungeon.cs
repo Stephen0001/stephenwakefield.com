@@ -1,4 +1,4 @@
-//THIS IS A C# APPLICATION AND WILL ONLY WORK IN VISUAL STUDIO
+//C# CONSOLE APPLICATION
 using System;
 using System.Collections.Generic;
 using System.Linq;
