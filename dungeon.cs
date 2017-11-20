@@ -16,21 +16,15 @@ namespace DungeonApplication
             Console.Title = "The Dungeon";
             Console.WriteLine("Welcome to the Dungeon!");
 
-            //Using the Weapon class to use an argument for the Player class
-            //public Weapon (maxDamage, minDamage, name, bonusHitChance, isTwoHanded)
             Weapon sword = new Weapon(6, 1, "Sword", 5, true);
-
-            //public Player(name, maxLife, hitChance, WEAPON EQIPPEDWEAPON, block, characterRace, life)
             Player player = new Player("Lerooooy Jenkins", 20, 30, sword, 2, Race.Drawf, 15);
 
             bool exit = false;
 
             do
             {
-                //a random room is generated
                 Console.WriteLine(GetRoom());
 
-                //Rabbit(maxDamage, maxLife, description, name, hitChance, block, minDamage, life, isFluffy)
                 Rabbit r1 = new Rabbit(6, 15, "He looks harmless","Easy","Baby Rabbit", 20, 1, 1, 15, false);
                 Rabbit r2 = new Rabbit(7, 20, "He's as cold as ice", "Medium", "Blue Rabbit", 22, 2, 3, 20, false);
                 Rabbit r3 = new Rabbit(10, 20, "His Eyes are firey red", "Hard", "Red Rabbit", 30, 3, 8, 20, true);
@@ -38,22 +32,18 @@ namespace DungeonApplication
 
                 Monster[] monsters =
                 {
-                    //increase chances of r1 to make it easier for the player
                     r1, r1, r1, r1, r1, r1, r1, r1, r1, r2, r3, f1
                 };
 
                 Random rand = new Random();
                 int randomNbr = rand.Next(monsters.Length);
-                //monster contains a random monster   i.e. r2
                 Monster monster = monsters[randomNbr];
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine($"\nMonster in this room: \n{monster.Name}");
                 Console.ResetColor();
 
-                //CONDITION TO LOOP OR BREAK LOOP
                 bool reload = false;
 
-                //do while loop
                 do
                 {
                     Console.Write("\nPlease choose and action:\n" + 
@@ -64,7 +54,6 @@ namespace DungeonApplication
                         "E) Exit\n" +
                         "Choose your fate");
 
-                    //get variable for keypress
                     ConsoleKey userChoice = Console.ReadKey().Key;
 
                     Console.Clear();
@@ -72,11 +61,8 @@ namespace DungeonApplication
                     switch (userChoice)
                     {
                         case ConsoleKey.A:
-                            //Attack Method
-                            //this is looped until someone dies
                             Combat.DoBattle(player, monster);
-
-                            //if you defeat Frankenstein (FINAL BOSS)
+                            
                             if (monster.Name == "Frankenstein (FINAL BOSS)" && monster.Life <= 0)
                             {
                                 #region ASCII ART
@@ -112,7 +98,6 @@ namespace DungeonApplication
                                 reload = true;
                                 exit = true;
                             }//end if
-                            //if any other monster dies
                             else if (monster.Life <= 0)
                             {
                                 Console.ForegroundColor = ConsoleColor.White;
@@ -120,14 +105,11 @@ namespace DungeonApplication
                                     monster.Name);
                                 Console.ResetColor();
 
-                                //regenerate the players health bar and add color
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine($"{player.Name}, your health has increased and been restored\n");
                                 Console.ResetColor();
                                 player.MaxLife += 2;
                                 player.Life = player.MaxLife;
-
-                                //player gets upgrades
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine($"{player.Name}, your {player.EquippedWeapon.Name} hit chance increased by 2\n");
                                 if (player.EquippedWeapon.MaxDamage == 10)
@@ -141,12 +123,11 @@ namespace DungeonApplication
                                 player.EquippedWeapon.MinDamage += 1;
                                 player.EquippedWeapon.BonusHitChance += 2;
 
-                                reload = true; //exit only the first loop to see if player died?!
+                                reload = true;
                             }//end else if
                             break;
                         case ConsoleKey.R:
                             Console.WriteLine("Run Away!");
-                            //monster (the attacker) has a chance to hit the player (the defender)
                             Combat.DoAttackMethod(monster, player);
                             reload = true; //exit only the first loop
                             break;
@@ -197,9 +178,7 @@ namespace DungeonApplication
             int roomIndex = rand.Next(rooms.Length);
             string room = rooms[roomIndex];
             return room;
-            //return rooms[new Random().Next(rooms.Length)];  //SHORTCUT TO CODE ABOVE
         }//end GetRoom()
-
     }//end class
 }//end namespace
 
@@ -212,15 +191,10 @@ using System.Threading.Tasks;
 
 namespace DungeonLibrary
 {
-    //"Abstract" will never be used other than to help create other classes, properties, and methods (incomplete implementation)
-    //Can't create an instance of an abstract class
-    //Use the abstract modifier in a class declaration to indicate that the class is inteded only to be a base (parent) for other classes
-    //PARENT CLASS
     public abstract class Character
     {
         //fields
         private int _life; //business rule
-
 
         //properties
         public string Name { get; set; }
@@ -243,22 +217,12 @@ namespace DungeonLibrary
             }//end set
         }//end Life
 
-
-        //constructors
-        //Since we don't inherit constructors from the parent AND this class is ABSTRACT, we are not going
-        //to create any CTORS here, we still get the free default constructor, but cannot use it b/c we
-        //can not create an instance of a character
-
-
         //methods
         public virtual int CalcBlock()
         {
             return Block;
         }//end CalcBlock()
-
-        //MINI-LAB: 
-        //make a method called CalcHitChance() that returns the HitChance
-        //make it overridable for the future
+        
         public virtual int CalcHitChance()
         {
             return HitChance;
@@ -268,7 +232,6 @@ namespace DungeonLibrary
         {
             return 0;
         }//end CalcDamage()
-
     }//end class
 }//end namespace
 
@@ -284,20 +247,17 @@ namespace DungeonLibrary
     //METHODS
     public class Combat
     {
-        //"Attacker" and "Defender" alternate b/t "player" and "monster"
         public static void DoAttackMethod(Character attacker, Character defender)
         {
             Random rand = new Random();
             int diceRoll = rand.Next(1,66);
-            //need a sleep b/c Next() will register the same rand number b/c it runs by timespan
             System.Threading.Thread.Sleep(30);
 
-            //i.e. if diceRoll  is less than:  (35 (hitChance + weapon bonusHitChance) - 2 (block))
             if (diceRoll < (attacker.CalcHitChance() - defender.CalcBlock()))
             {
                 int damageDealt = attacker.CalcDamage();
                 defender.Life -= damageDealt;
-                Console.ForegroundColor = ConsoleColor.Red; //if attacker hits (player or monster)
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("{0} hit {1} for {2} damage!",
                     attacker.Name,
                     defender.Name,
@@ -313,17 +273,12 @@ namespace DungeonLibrary
 
         public static void DoBattle(Player player, Monster monster)
         {
-            //player is the attacker, monster is the defender
             DoAttackMethod(player, monster);
-
-            //as long as the monster is still alive
             if (monster.Life > 0)
             {
-                //monster is the attacker, player is the defender
                 DoAttackMethod(monster, player);
             }//end if
         }//end DoBattle()
-
     }//end Combat class
 }//end namespace
 
@@ -336,7 +291,6 @@ using System.Threading.Tasks;
 
 namespace DungeonLibrary
 {
-    //Monster is Child Of the Character class
     public class Monster : Character
     {
         //properties
@@ -363,7 +317,7 @@ namespace DungeonLibrary
 
 
         //constructors
-        public Monster() { }//end default CTOR
+        public Monster() { }
 
         public Monster(int maxDamage, int maxLife, string description, string enemyClass, string name, int hitChance, int block, int minDamage, int life)
         {
@@ -377,7 +331,6 @@ namespace DungeonLibrary
             MinDamage = minDamage; 
             Life = life;
         }//end FQCTOR
-
 
         //methods
         public override string ToString()
@@ -395,7 +348,6 @@ namespace DungeonLibrary
 
         public override int CalcDamage()
         {
-            // return a number b/t 1 and 6
             return new Random().Next(MinDamage, MaxDamage + 1);
         }
     }//end class
@@ -410,43 +362,13 @@ using System.Threading.Tasks;
 
 namespace DungeonLibrary
 {
-    //New classes default to an INTERNAL access modifier, so you make them public, if you intend to 
-    //use them outside a project where they are created
-    //Player is a child of Character
     public class Player : Character
     {
         //fields
-        //private int _life;
-
-        //properties
-        //(automatic properties) - prop tab tab
-        //public string Name { get; set; }
-        //public int MaxLife { get; set; }
-        //public int HitChance { get; set; }
         public Weapon EquippedWeapon { get; set; }
-        //public int Block { get; set; }
-        //don't use enum here... There is a Race enum
         public Race CharacterRace { get; set; }
-        //Traditional property with Business Rule (long way)
-        //public int Life
-        //{
-        //    get { return _life; }
-        //    set
-        //    {
-        //        if (value <= MaxLife)
-        //        {
-        //            _life = value;
-        //        }//end if
-        //        else
-        //        {
-        //            _life = MaxLife;
-        //        }//end else
-        //    }//end set
-        //}//end Life
-
-
+        
         //constructors
-        //only make an FQCTOR... We never want a blank Player
         public Player(string name, int maxLife, int hitChance, Weapon eqippedWeapon, int block, Race characterRace, int life)
         {
             Name = name;
@@ -462,8 +384,7 @@ namespace DungeonLibrary
         public override string ToString()
         {
             string description = "";
-
-            //CharacterRace is an enum
+            
             switch (CharacterRace)
             {
                 case Race.BloodElf:
@@ -497,22 +418,15 @@ namespace DungeonLibrary
 
         public override int CalcHitChance()
         {
-            //HitChance + BonusHitChance from weapon
-            //i.e. return 30 + 5 = 35
             return base.CalcHitChance() + EquippedWeapon.BonusHitChance;
         }//end CalcHitChance()
 
         public override int CalcDamage()
         {
             Random rand = new Random();
-            //generate a random number b/t:  1 and 6
             int damage = rand.Next(EquippedWeapon.MinDamage, EquippedWeapon.MaxDamage + 1);
-            //i.e. return 5
             return damage;
         }//end CalcDamage()
-
-        //ALL THE REST OF THE METHODS ARE INHERITED FROM THE CHARACTER PARENT CLASS
-
     }//end Player
 }//end namespace        
 
@@ -525,11 +439,8 @@ using System.Threading.Tasks;
 
 namespace DungeonLibrary
 {
-    //You can not add a ENUM through V.S. interface
-    //INSTEAD... you can to create public class with the enum keyword (instead of class)
     public enum Race
     {
-        //Single values, comma separated, no spaces
         BloodElf,
         Human,
         Khajit,
@@ -548,7 +459,6 @@ using System.Threading.Tasks;
 
 namespace DungeonLibrary
 {
-    //The default access modifier fro a class is INTERNAL (it is only accessible inside the project where it was created)
     public class Weapon
     {
         //fields
@@ -558,14 +468,13 @@ namespace DungeonLibrary
         private bool _isTwoHanded;
         private int _bonusHitChance;
 
-
         //properties
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }//end Name
-
+        
         public bool IsTwoHanded
         {
             get { return _isTwoHanded; }
@@ -590,7 +499,6 @@ namespace DungeonLibrary
             get { return _minDamage; }
             set
             {
-                //_minDamage can not be greater than MaxDamage
                 if (value > 0 && value <= MaxDamage )
                 {
                     _minDamage = value;
@@ -602,21 +510,17 @@ namespace DungeonLibrary
             }
         }//end MinDamage
 
-
         //constructors
         public Weapon() { }
 
-        //REMEMBER: MaxDamage has a DEPENDENCY on MinDamage
         public Weapon (int maxDamage, int minDamage, string name, int bonusHitChance, bool isTwoHanded)
         {
-            //<Property> = <args>
             MaxDamage = maxDamage;
             MinDamage = minDamage;
             Name = name;
             BonusHitChance = bonusHitChance;
             IsTwoHanded = isTwoHanded;
         }//end FQCTOR
-
 
         //methods
         public override string ToString()
@@ -628,7 +532,6 @@ namespace DungeonLibrary
                 BonusHitChance,
                 IsTwoHanded ? "Two-Handed: Yes" : "Two-Handed: No");
         }//end ToString()
-
     }//end weapon class
 }//end namespace
 
@@ -647,7 +550,6 @@ namespace DungeonMonsters
         //fields (inherited)
 
         //properties (inherited)
-
 
         //constructors
         public Frankenstein() { }
@@ -669,8 +571,7 @@ namespace DungeonMonsters
         public override string ToString()
         {
             return base.ToString();
-        }
-
+        }//end ToString()
     }//end class
 }//end namespace
 
@@ -688,7 +589,7 @@ namespace DungeonMonsters
     {
         //fields(inherted)
 
-        //properties (inherited)
+        //properties
         public bool IsFluffy { get; set; }
 
         //constructors
@@ -708,11 +609,11 @@ namespace DungeonMonsters
             IsFluffy = isFluffy; //not inherited
         }
 
-            //methods (using inheritence with overrides)
-            public override string ToString()
-            {
-                return base.ToString() + ((IsFluffy) ? "It's quite fluffy" : "Not so fluffy");
-            }
+        //methods
+        public override string ToString()
+        {
+            return base.ToString() + ((IsFluffy) ? "It's quite fluffy" : "Not so fluffy");
+        }
 
         public override int CalcBlock()
         {
@@ -724,6 +625,5 @@ namespace DungeonMonsters
             }
             return calculatedBlock;
         } //end CalcDamage
-
     }//end class
 }//end namespace
