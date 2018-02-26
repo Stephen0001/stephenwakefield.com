@@ -1,0 +1,145 @@
+//fsdp.SteveWakefield.info
+
+//The following code sections are for my final project
+
+//LINQ EXAMPLE #1
+public ActionResult Index()
+{
+    using (var context = new ApplicationDbContext())
+    {
+        var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        var lessonsViewed = db.LessonViews.ToList();
+
+        foreach (var item in lessonsViewed)
+        {
+            var user = userManager.FindById(item.UserID);
+            //GUID (original UserID) is now replaced with Email from the AspUsers Identity table
+            item.UserID = user.Email;
+        }
+    }//end using
+
+    var lessonViews = db.LessonViews.Include(l => l.Lesson).ToList();
+    return View(lessonViews);
+}
+
+
+//LINQ EXAMPLE #2
+public ActionResult Add(int id)
+{
+    var currentUser = User.Identity.GetUserId();
+
+    // THE USER ONLY SEES THEIR INFO
+    // STOP USER FROM DUPLICATING THE LESSON
+    var lessonViewed = ctx.LessonViews.Where(lv => lv.UserID == currentUser).Where(x => x.LessonID == id).Count();
+
+    if (lessonViewed == 0)
+    {
+        LessonView item = new LessonView();
+
+        //Put data into the LessonViews table
+        item.LessonID = id;
+        item.UserID = User.Identity.GetUserId();
+        item.DateViewed = DateTime.Now;
+
+        //Add the new item to the LessonViews table
+        ctx.LessonViews.Add(item);
+        ctx.SaveChanges();
+
+        return RedirectToAction("Details", "Lessons", new { id = id });
+    }
+
+    return RedirectToAction("Details", "Lessons", new { id = id });
+}
+
+
+//LINQ EXAMPLE #3
+// GET: Course
+public ActionResult Index()
+{
+    var courses = db.Courses;
+
+    decimal courseCount = db.Courses.Count();
+
+    ViewBag.CourseCount = courseCount;
+
+    decimal lessonCount = db.Lessons.Count();
+
+    ViewBag.LessonCount = lessonCount;
+
+    //i.e. [0] { CourseName: Barre Chords, PdfFileName: ABarreChordImg }
+    //var getAllCourseNamesAndVideoImage = db.Lessons.Select(x => new { x.Cours.CourseName, x.VideoImage }).ToList();
+
+    //ViewBag.GetAllCourseNamesAndPdfFilenames = getAllCourseNamesAndVideoImage;
+    #endregion
+
+    //i.e. 497f60d5-591c-4ae4-b9a1-992c37f77ad9
+    var currentUser = User.Identity.GetUserId();
+
+    decimal courseCompletions = db.CourseCompletions.Where(x => x.UserID == currentUser).Count();
+
+    ViewBag.CourseCompletions = courseCompletions;
+
+    decimal lessonCompletions = db.LessonViews.Where(x => x.UserID == currentUser).Count();
+
+    ViewBag.LessonCompletions = lessonCompletions;
+
+    decimal percentageMultiplier = 100;
+
+    decimal test = ViewBag.CourseCompletions / ViewBag.CourseCount;
+
+    decimal courseCompletionPercentage = ((ViewBag.CourseCompletions / ViewBag.CourseCount) * percentageMultiplier);
+
+    ViewBag.CourseCompletionPercentage = courseCompletionPercentage;
+
+    decimal lessonCompletionPercentage = ((ViewBag.LessonCompletions / ViewBag.LessonCount) * percentageMultiplier);
+
+    ViewBag.LessonCompletionPercentage = lessonCompletionPercentage;
+
+    return View(db.Courses.ToList());
+}
+
+
+//JAVASCRIPT EXAMPLE CODE
+@section scripts {
+    <script>
+        console.log($('#courseCompletionPercentage').attr("data-percent"));
+
+        var CourseCompletionPercentage = $('#courseCompletionPercentage').attr("data-percent")
+        var getCreditForCourse = $('#getCreditForCourse');
+
+        if (CourseCompletionPercentage >= 100) {
+
+            $('#getCreditForCourse').css("display", "none");
+
+            @{
+            string urlPath = HttpContext.Current.Request.Url.AbsolutePath;
+
+            int routePosition = urlPath.LastIndexOf("/");
+
+            string route = urlPath.Substring(routePosition + 1);
+            }
+
+            getCreditForCourse.append('<a class="animated zoomInLeft" href="@Url.Action("Add", "CoursesCompleted", new { id = route })">Click <u>here</u> to claim that you finished the course</a>')
+                .dialog({
+                    //code omitted for brevity
+                    autoOpen: true,
+                    modal: true,
+                    width: 300,
+                    height: 300,
+                    title: 'Congrats: Take Credit',
+                    resizable: false,
+                    buttons: [
+                        {
+                            text: "Close",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    ]
+                });
+        }
+        //<a href='@Url.Action("Add", "CoursesCompleted", new { id = 1 })'></a>)
+    </script>
+
+}
+
