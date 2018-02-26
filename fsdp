@@ -140,6 +140,5 @@ public ActionResult Index()
         }
         //<a href='@Url.Action("Add", "CoursesCompleted", new { id = 1 })'></a>)
     </script>
-
 }
 
